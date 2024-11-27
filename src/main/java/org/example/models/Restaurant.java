@@ -1,8 +1,8 @@
 package org.example.models;
 
-import org.example.controllers.MesaController;
-import org.example.controllers.MeseroController;
-import org.example.controllers.RecepcionistaController;
+import org.example.views.MesaView;
+import org.example.views.MeseroView;
+import org.example.views.RecepcionistaView;
 import org.example.models.actors.Comensal;
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
@@ -10,6 +10,7 @@ import org.example.models.restaurant.Cocina;
 import org.example.monitores.ComidasMonitor;
 import org.example.monitores.MesaMonitor;
 import org.example.utils.DistribucionPoisson;
+
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,11 +26,11 @@ public class Restaurant {
     public static final List<Mesero> meseros = new ArrayList<>(); // Lista de meseros
     public static Recepcionista recepcionista;
 
-    private static RecepcionistaController recepcionistaController;
-    private static List<MeseroController> meseroControllers = new ArrayList<>();
+    private static RecepcionistaView recepcionistaController;
+    private static List<MeseroView> meseroControllers = new ArrayList<>();
 
     // Inicializar los controladores desde la vista
-    public static void inicializarControladores(RecepcionistaController recepcionistaCtrl, List<MeseroController> meseroCtrlList) {
+    public static void inicializarControladores(RecepcionistaView recepcionistaCtrl, List<MeseroView> meseroCtrlList) {
         recepcionistaController = recepcionistaCtrl;
         meseroControllers = meseroCtrlList;
     }
@@ -76,6 +77,6 @@ public class Restaurant {
         }
     }
 
-    public static void inicializarMesas(List<MesaController> mesaControllers) {
+    public static void inicializarMesas(List<MesaView> mesaControllers) {
     }
 }

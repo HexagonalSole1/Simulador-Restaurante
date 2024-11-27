@@ -2,9 +2,6 @@ package org.example.views;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import org.example.controllers.MesaController;
-import org.example.controllers.MeseroController;
-import org.example.controllers.RecepcionistaController;
 import org.example.models.Restaurant;
 
 import java.util.ArrayList;
@@ -24,44 +21,38 @@ public class RestaurantView extends GameApplication {
     protected void initGame() {
         getGameScene().setBackgroundRepeat("fondo.png");
 
-        // Inicializar controladores gráficos
-        RecepcionistaController recepcionistaController = new RecepcionistaController();
-        recepcionistaController.crearRecepcionista("Recepcionista", 100, 50);
+        // Crear recepcionista
+        RecepcionistaView recepcionistaView = new RecepcionistaView();
+        recepcionistaView.crearRecepcionista("Recepcionista", 100, 50);
 
-        List<MeseroController> meseroControllers = new ArrayList<>();
-        MeseroController meseroController = new MeseroController();
-        meseroController.crearMesero("Mesero 1", 150, 150);
-        meseroControllers.add(meseroController);
+        // Crear mesero
+        MeseroView meseroView = new MeseroView();
+        meseroView.crearMesero("Mesero 1", 150, 150);
 
-        // Crear mesas distribuidas en filas y columnas
-        List<MesaController> mesaControllers = new ArrayList<>();
+        // Crear mesas
+        List<MesaView> mesaViews = new ArrayList<>();
         int mesasPorFila = 3; // Número de mesas por fila
-        int espacioHorizontal = 250; // Espacio entre mesas horizontalmente
-        int espacioVertical = 200; // Espacio entre mesas verticalmente
+        int espacioHorizontal = 250;
+        int espacioVertical = 200;
 
-        for (int fila = 0; fila < 2; fila++) { // Dos filas
-            for (int columna = 0; columna < mesasPorFila; columna++) { // Tres columnas por fila
+        for (int fila = 0; fila < 2; fila++) { // Dos filas de mesas
+            for (int columna = 0; columna < mesasPorFila; columna++) {
                 int numeroMesa = fila * mesasPorFila + columna + 1;
-                MesaController mesaController = new MesaController();
-                mesaController.crearMesa(
-                        numeroMesa,
-                        200 + columna * espacioHorizontal, // Posición X
-                        200 + fila * espacioVertical      // Posición Y
-                );
-                mesaControllers.add(mesaController);
+                MesaView mesaView = new MesaView();
+                mesaView.crearMesa(numeroMesa, 300 + columna * espacioHorizontal, 200 + fila * espacioVertical);
+                mesaViews.add(mesaView);
             }
         }
 
-        // Conectar controladores con la lógica
-        Restaurant.inicializarControladores(recepcionistaController, meseroControllers);
-        Restaurant.inicializarMesas(mesaControllers);
-
-        // Iniciar simulación
+        // Conectar visualización con la lógica
+        Restaurant.inicializarMesas(mesaViews);
         Restaurant.iniciarSimulacion();
     }
 
-
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void iniciarSimulacion(int i, double v) {
     }
 }

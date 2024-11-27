@@ -4,17 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.models.core.Persona;
 import org.example.models.Restaurant;
-import org.example.controllers.ComensalController;
+import org.example.views.ComensalView;
 
 @Getter
 @Setter
 public class Comensal extends Persona implements Runnable {
     private int mesaAsignada;
-    private final ComensalController controlador;
+    private final ComensalView controlador;
 
     public Comensal(String nombre, int id) {
         super(nombre, id);
-        this.controlador = new ComensalController(); // Instancia vacía del controlador
+        this.controlador = new ComensalView(); // Instancia vacía del controlador
     }
 
     public void inicializarVisual(String nombre, double x, double y) {
