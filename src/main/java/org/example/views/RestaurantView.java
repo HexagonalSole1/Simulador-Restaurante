@@ -52,12 +52,12 @@ public class RestaurantView extends GameApplication {
             }
         }
 
-        // Conectar controladores con la lógica
+/*        // Conectar controladores con la lógica
         Restaurant.inicializarControladores(recepcionistaController, meseroControllers);
         Restaurant.inicializarMesas(mesaControllers);
 
         // Iniciar simulación
-        Restaurant.iniciarSimulacion();
+        Restaurant.iniciarSimulacion();*/
     }
 
 
