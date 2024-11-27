@@ -1,7 +1,8 @@
 package org.example.config;
 
-import org.example.models.restaurant.Cocina;
+
+
 
 public class Constants {
-    private final static Cocina cocina = null;
+    public static final int NUMERO_COMENSALES = 1; // Usa nombres en mayúsculas para constantes
 }

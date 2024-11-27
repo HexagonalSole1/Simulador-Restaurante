@@ -19,7 +19,7 @@ public class MesaMonitor {
         for (int i = 0; i < mesas.length; i++) {
             if (!mesas[i]) { // Encuentra la primera mesa libre
                 mesas[i] = true; // Ocupa la mesa
-                System.out.println("Mesa " + i + " ocupada.");
+                System.out.println("Mesa " + i + " no esta ocupada.");
                 notifyAll(); // Notifica a otros hilos que el estado de las mesas ha cambiado
                 return i; // Devuelve el ID de la mesa ocupada
             }
