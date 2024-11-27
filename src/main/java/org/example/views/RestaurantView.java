@@ -16,8 +16,8 @@ public class RestaurantView extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Simulador de Restaurante");
-        settings.setWidth(800);
-        settings.setHeight(600);
+        settings.setWidth(1200);
+        settings.setHeight(800);
     }
 
     @Override
@@ -26,27 +26,40 @@ public class RestaurantView extends GameApplication {
 
         // Inicializar controladores gráficos
         RecepcionistaController recepcionistaController = new RecepcionistaController();
-        recepcionistaController.crearRecepcionista("Recepcionista", 50, 50);
+        recepcionistaController.crearRecepcionista("Recepcionista", 100, 50);
 
         List<MeseroController> meseroControllers = new ArrayList<>();
         MeseroController meseroController = new MeseroController();
-        meseroController.crearMesero("Mesero 1", 100, 100);
+        meseroController.crearMesero("Mesero 1", 150, 150);
         meseroControllers.add(meseroController);
 
-        // Crear mesas
+        // Crear mesas distribuidas en filas y columnas
         List<MesaController> mesaControllers = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MesaController mesaController = new MesaController();
-            mesaController.crearMesa(i + 1, 200 + i * 100, 200); // Posicionar las mesas
-            mesaControllers.add(mesaController);
+        int mesasPorFila = 3; // Número de mesas por fila
+        int espacioHorizontal = 250; // Espacio entre mesas horizontalmente
+        int espacioVertical = 200; // Espacio entre mesas verticalmente
+
+        for (int fila = 0; fila < 2; fila++) { // Dos filas
+            for (int columna = 0; columna < mesasPorFila; columna++) { // Tres columnas por fila
+                int numeroMesa = fila * mesasPorFila + columna + 1;
+                MesaController mesaController = new MesaController();
+                mesaController.crearMesa(
+                        numeroMesa,
+                        200 + columna * espacioHorizontal, // Posición X
+                        200 + fila * espacioVertical      // Posición Y
+                );
+                mesaControllers.add(mesaController);
+            }
         }
 
         // Conectar controladores con la lógica
         Restaurant.inicializarControladores(recepcionistaController, meseroControllers);
+        Restaurant.inicializarMesas(mesaControllers);
 
         // Iniciar simulación
         Restaurant.iniciarSimulacion();
     }
+
 
     public static void main(String[] args) {
         launch(args);

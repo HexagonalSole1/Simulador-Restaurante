@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.controllers.MesaController;
 import org.example.controllers.MeseroController;
 import org.example.controllers.RecepcionistaController;
 import org.example.models.actors.Comensal;
@@ -73,5 +74,8 @@ public class Restaurant {
             Mesero mesero = new Mesero("Mesero " + i, i, mesaMonitor, comidasMonitor);
             meseros.add(mesero);
         }
+    }
+
+    public static void inicializarMesas(List<MesaController> mesaControllers) {
     }
 }
