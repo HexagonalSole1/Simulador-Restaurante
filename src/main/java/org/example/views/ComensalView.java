@@ -2,29 +2,26 @@ package org.example.views;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.geometry.Point2D;
+import org.example.views.components.ComensalComponent;
 
-public class ComensalView{
-    private Entity comensalEntity;
+public class ComensalView {
 
-    // Constructor vacío para evitar inicialización temprana
-    public ComensalView() {}
+    private Entity comensal;
 
-    // Método para inicializar al comensal dentro del ciclo de vida de FXGL
-    public void crearComensal(String nombre, double x, double y) {
-        this.comensalEntity = FXGL.entityBuilder()
-                .at(x, y)
-                .viewWithBBox("cliente.png") // Imagen del comensal
+    public ComensalView(double startX, double startY) {
+        this.comensal = FXGL.entityBuilder()
+                .at(startX, startY) // Posición inicial
+                .view("cliente.png") // Imagen
+                .with(new ComensalComponent()) // Agrega el componente
                 .buildAndAttach();
     }
 
-    // Método para mover al comensal visualmente
-    public void mover(double x, double y) {
-        FXGL.animationBuilder()
-                .duration(javafx.util.Duration.seconds(1))
-                .translate(comensalEntity)
-                .to(new Point2D(x, y))
-                .build()
-                .start();
+    public void moverAMesa(double mesaX, double mesaY) {
+        comensal.getComponent(ComensalComponent.class).moveToMesa(mesaX, mesaY);
+    }
+
+    public void salir() {
+        comensal.getComponent(ComensalComponent.class).salirDelRestaurante();
     }
 }
+

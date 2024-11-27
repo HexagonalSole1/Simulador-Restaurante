@@ -1,17 +1,31 @@
 package org.example.controllers;
 
-import org.example.views.MeseroView;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.dsl.FXGL;
+import javafx.geometry.Point2D;
 
 public class MeseroController {
-    private final MeseroView meseroView;
+    private Entity meseroEntity;
 
-    public MeseroController(MeseroView meseroView) {
-        this.meseroView = meseroView;
+    // Constructor vacío para evitar inicialización temprana
+    public MeseroController() {}
+
+    // Método para inicializar al mesero dentro del ciclo de vida de FXGL
+    public void crearMesero(String nombre, double x, double y) {
+        this.meseroEntity = FXGL.entityBuilder()
+                .at(x, y)
+                .viewWithBBox("mesera.png") // Imagen del mesero
+                .buildAndAttach();
     }
 
-    // Lógica para mover al mesero a una mesa específica
-    public void moverAMesa(double x, double y) {
-        System.out.println("Moviendo al mesero a la posición: (" + x + ", " + y + ")");
-        meseroView.mover(x, y); // Solicita a la vista que realice el movimiento
+    // Método para mover al mesero visualmente
+    public void mover(double x, double y) {
+        FXGL.animationBuilder()
+                .duration(javafx.util.Duration.seconds(1))
+                .translate(meseroEntity)
+                .to(new Point2D(x, y))
+                .build()
+                .start();
     }
+
 }
