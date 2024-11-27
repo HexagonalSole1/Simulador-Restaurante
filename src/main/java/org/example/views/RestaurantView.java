@@ -9,15 +9,15 @@ public class RestaurantView extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Simulador de Restaurante");
-        settings.setWidth(2000);
-        settings.setHeight(1000);
+        settings.setWidth(800);
+        settings.setHeight(600);
         settings.setMainMenuEnabled(false);
     }
 
     @Override
     protected void initGame() {
         // Configurar fondo del restaurante
-        getGameScene().setBackgroundRepeat("fondo.png");
+        getGameScene().setBackgroundRepeat("textures/restaurante_fondo.png");
 
         // Crear y posicionar la recepcionista
         Humans.crearRecepcionista(50, 50); // Entrada del restaurante
@@ -38,6 +38,7 @@ public class RestaurantView extends GameApplication {
 
         // Crear y posicionar meseros cerca de las mesas
         Humans.crearMesero(220, 220); // Cerca de la primera mesa
+        Humans.crearMesero(420, 220); // Cerca de la segunda mesa
     }
 
     public static void main(String[] args) {

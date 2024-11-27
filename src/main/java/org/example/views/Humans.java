@@ -1,6 +1,8 @@
 package org.example.views;
 
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.dsl.FXGL;
+
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
 public class Humans {
@@ -8,7 +10,7 @@ public class Humans {
     public static Entity crearRecepcionista(double x, double y) {
         return entityBuilder()
                 .at(x, y)
-                .viewWithBBox("recepcionista.png") // Imagen ubicada en assets/textures
+                .viewWithBBox("recepcionista.png") // Imagen ubicada en assets.textures
                 .buildAndAttach();
     }
 
@@ -33,10 +35,6 @@ public class Humans {
                 .buildAndAttach();
     }
 
-    public static Entity crearMesa(double x, double y) {
-        return entityBuilder()
-                .at(x, y)
-                .viewWithBBox("mesa.png") // Imagen de la mesa
-                .buildAndAttach();
+    public static void crearMesa(int i, int i1) {
     }
 }

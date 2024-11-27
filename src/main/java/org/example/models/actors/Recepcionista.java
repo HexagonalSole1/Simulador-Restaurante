@@ -1,39 +1,29 @@
 package org.example.models.actors;
 
 import org.example.models.core.Persona;
+import org.example.monitores.MesaMonitor;
 
 public class Recepcionista extends Persona {
-    private int mesasDisponibles;
+    private final MesaMonitor mesaMonitor; // Monitor para gestionar las mesas
 
-    public Recepcionista(String nombre, int id, int capacidadMesas) {
+    public Recepcionista(String nombre, int id, MesaMonitor mesaMonitor) {
         super(nombre, id);
-        this.mesasDisponibles = capacidadMesas;
+        this.mesaMonitor = mesaMonitor; // Asocia el monitor de mesas
     }
 
-    // Método sincronizado para asignar mesas
-    public synchronized void atenderComensal(Comensal comensal) throws InterruptedException {
+    // Método para atender a un comensal
+    public void atenderComensal(Comensal comensal) throws InterruptedException {
         realizarAccion();
-        while (mesasDisponibles == 0) {
-            System.out.println("Recepcionista " + getNombre() + ": No hay mesas disponibles para " + comensal.getNombre() + ". Esperando...");
-            wait(); // Espera hasta que una mesa sea liberada
-        }
 
-        // Asigna una mesa
-        mesasDisponibles--;
-        System.out.println("Recepcionista " + getNombre() + ": Mesa asignada al comensal " + comensal.getNombre());
 
-        // Simula tiempo de asignación
+        int idMesa = mesaMonitor.ocuparMesa();
+        System.out.println("Recepcionista " + getNombre() + ": Mesa " + idMesa + " asignada al comensal " + comensal.getNombre());
+
+        // Simula tiempo para asignar la mesa
         Thread.sleep(1000);
 
-        // Libera la mesa después de la atención
-        liberarMesa(comensal);
-    }
-
-    // Método sincronizado para liberar mesas
-    private synchronized void liberarMesa(Comensal comensal) {
-        mesasDisponibles++;
-        System.out.println("Recepcionista " + getNombre() + ": Mesa liberada por el comensal " + comensal.getNombre());
-        notifyAll(); // Notifica a los comensales en espera
+        // Notifica al comensal que tiene una mesa asignada
+        comensal.setMesaAsignada(idMesa);
     }
 
     @Override
