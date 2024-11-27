@@ -2,43 +2,50 @@ package org.example.views;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import org.example.controllers.MesaController;
+import org.example.controllers.MeseroController;
+import org.example.controllers.RecepcionistaController;
+import org.example.models.Restaurant;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class RestaurantView extends GameApplication {
-
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Simulador de Restaurante");
         settings.setWidth(800);
         settings.setHeight(600);
-        settings.setMainMenuEnabled(false);
     }
 
     @Override
     protected void initGame() {
-        // Configurar fondo del restaurante
-        getGameScene().setBackgroundRepeat("textures/restaurante_fondo.png");
+        getGameScene().setBackgroundRepeat("fondo.png");
 
-        // Crear y posicionar la recepcionista
-        Humans.crearRecepcionista(50, 50); // Entrada del restaurante
+        // Inicializar controladores gráficos
+        RecepcionistaController recepcionistaController = new RecepcionistaController();
+        recepcionistaController.crearRecepcionista("Recepcionista", 50, 50);
 
-        // Crear y posicionar al chef
-        Humans.crearChef(600, 400); // Fondo del restaurante
+        List<MeseroController> meseroControllers = new ArrayList<>();
+        MeseroController meseroController = new MeseroController();
+        meseroController.crearMesero("Mesero 1", 100, 100);
+        meseroControllers.add(meseroController);
 
-        // Crear y posicionar las mesas dispersas
-        Humans.crearMesa(200, 200);
-        Humans.crearMesa(400, 200);
-        Humans.crearMesa(300, 350);
-        Humans.crearMesa(500, 350);
-
-        // Crear clientes en fila en el lado izquierdo
+        // Crear mesas
+        List<MesaController> mesaControllers = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Humans.crearComensal(50, 150 + i * 70, "Comensal " + (i + 1));
+            MesaController mesaController = new MesaController();
+            mesaController.crearMesa(i + 1, 200 + i * 100, 200); // Posicionar las mesas
+            mesaControllers.add(mesaController);
         }
 
-        // Crear y posicionar meseros cerca de las mesas
-        Humans.crearMesero(220, 220); // Cerca de la primera mesa
-        Humans.crearMesero(420, 220); // Cerca de la segunda mesa
+        // Conectar controladores con la lógica
+        Restaurant.inicializarControladores(recepcionistaController, meseroControllers);
+
+        // Iniciar simulación
+        Restaurant.iniciarSimulacion();
     }
 
     public static void main(String[] args) {
