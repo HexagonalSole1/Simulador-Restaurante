@@ -17,7 +17,7 @@ public class Recepcionista extends Persona {
 
 
         int idMesa = mesaMonitor.ocuparMesa();
-        System.out.println("Recepcionista " + getNombre() + ": Mesa " + idMesa + " asignada al comensal " + comensal.getNombre());
+        System.out.println("Recepcionista " + getNombre() + ": Mesa " + (idMesa + 1) + " asignada al comensal " + comensal.getNombre());
 
         // Simula tiempo para asignar la mesa
         Thread.sleep(1000);

@@ -1,54 +1,40 @@
 package org.example.models.actors;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.models.core.Persona;
 import org.example.monitores.ComidasMonitor;
 import org.example.monitores.MesaMonitor;
 
+@Getter
+@Setter
 public class Mesero extends Persona {
+    private final int mesaAsignada; // Mesa exclusiva para este mesero
     private final MesaMonitor mesaMonitor;
-    private final ComidasMonitor cocinaMonitor;
+    private final ComidasMonitor comidasMonitor;
 
-    public Mesero(String nombre, int id, MesaMonitor mesaMonitor, ComidasMonitor cocinaMonitor) {
+    public Mesero(String nombre, int id, int mesaAsignada, MesaMonitor mesaMonitor, ComidasMonitor comidasMonitor) {
         super(nombre, id);
+        this.mesaAsignada = mesaAsignada;
         this.mesaMonitor = mesaMonitor;
-        this.cocinaMonitor = cocinaMonitor;
+        this.comidasMonitor = comidasMonitor;
+    }
+
+    // Atender pedido para la mesa asignada
+    public synchronized void atenderPedido() throws InterruptedException {
+        System.out.println("Mesero " + getNombre() + " está tomando el pedido de la mesa " + mesaAsignada);
+        comidasMonitor.nuevoPedido(mesaAsignada); // Envía el pedido a la cocina
+    }
+
+    // Limpiar la mesa asignada
+    public synchronized void limpiarMesa() throws InterruptedException {
+        System.out.println("Mesero " + getNombre() + " está limpiando la mesa " + mesaAsignada);
+        mesaMonitor.liberarMesa(mesaAsignada); // Libera la mesa
     }
 
     @Override
     public void realizarAccion() {
-        System.out.println("Mesero " + nombre + " está atendiendo a un comensal.");
-    }
+        System.out.println("Mesero " + getNombre() + " está atendiendo a un comensal en la mesa : " + mesaAsignada);
 
-    // Método para atender un pedido
-    public synchronized void atenderPedido(Comensal comensal) throws InterruptedException {
-        realizarAccion();
-        System.out.println("Mesero " + getNombre() + " está tomando el pedido del comensal " + comensal.getNombre());
-
-        // Enviar el pedido a la cocina
-        cocinaMonitor.nuevoPedido(comensal.getMesaAsignada());
-        System.out.println("Mesero " + getNombre() + " ha enviado el pedido de la mesa " + comensal.getMesaAsignada() + " a la cocina.");
-
-        // Simula tiempo para entregar el pedido
-        Thread.sleep(1000);
-
-        // Recoger el pedido de la cocina
-        recogerPedido(comensal);
-    }
-
-    // Método para recoger un pedido de la cocina
-    private synchronized void recogerPedido(Comensal comensal) throws InterruptedException {
-        int idMesa = cocinaMonitor.tomarPedido();
-        System.out.println("Mesero " + getNombre() + " ha recogido el pedido de la mesa " + idMesa);
-
-        // Entregar el pedido al comensal
-        System.out.println("Mesero " + getNombre() + ": Pedido entregado al comensal " + comensal.getNombre());
-    }
-
-    // Método para limpiar una mesa
-    public synchronized void limpiarMesa(Comensal comensal) throws InterruptedException {
-        System.out.println("Mesero " + getNombre() + " está limpiando la mesa del comensal " + comensal.getNombre());
-        mesaMonitor.liberarMesa(comensal.getMesaAsignada()); // Libera la mesa en el monitor
-        Thread.sleep(500); // Simula tiempo de limpieza
-        System.out.println("Mesero " + getNombre() + ": Mesa " + comensal.getMesaAsignada() + " ha sido limpiada.");
     }
 }
