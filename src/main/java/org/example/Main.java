@@ -1,10 +1,12 @@
 package org.example;
 
+import org.example.models.Restaurant;
 import org.example.models.restaurant.Cocina;
 import org.example.models.actors.Comensal;
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
 import org.example.utils.DistribucionPoisson;
+import org.example.views.RestaurantView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,6 +17,18 @@ public class Main {
     public static final Cocina cocina = new Cocina(1); // 1 cocinero
 
     public static void main(String[] args) {
+
+        // Iniciar la simulación en un hilo separado
+        Thread simulacionThread = new Thread(() -> {
+            Restaurant restaurant = new Restaurant();
+            restaurant.iniciarSimulacion();
+        });
+
+        simulacionThread.start();
+
+        // Iniciar la aplicación gráfica de FXGL
+        RestaurantView.main(args);
+
         ExecutorService poolComensales = Executors.newCachedThreadPool();
         int idComensal = 1;
 
@@ -35,5 +49,9 @@ public class Main {
         // Cierra el pool de hilos después de completar las tareas
         poolComensales.shutdown();
         System.out.println("Simulación completada. Todos los comensales han sido atendidos.");
+
+
     }
 }
+
+

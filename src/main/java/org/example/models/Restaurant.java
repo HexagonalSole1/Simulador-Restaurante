@@ -11,13 +11,14 @@ import java.util.concurrent.Executors;
 
 public class Restaurant {
     public static final Recepcionista recepcionista = new Recepcionista("Laura", 1, 1); // 1 mesa
-    public static final Mesero meseros = new Mesero("Pedro", 2); // 1 mesero
+    public static final Mesero mesero = new Mesero("Pedro", 2); // 1 mesero
     public static final Cocina cocina = new Cocina(1); // 1 cocinero
+    public static Mesero meseros;
 
-    public static void main(String[] args) {
+    public void iniciarSimulacion() {
         ExecutorService poolComensales = Executors.newCachedThreadPool();
         int idComensal = 1;
-        int totalComensales = 2; // Límite de comensales
+        int totalComensales = 5; // Límite de comensales
 
         for (int i = 0; i < totalComensales; i++) {
             poolComensales.submit(new Comensal("Comensal " + idComensal, idComensal++));
