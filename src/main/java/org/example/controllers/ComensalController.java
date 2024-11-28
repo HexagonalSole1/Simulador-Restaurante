@@ -10,5 +10,4 @@ import org.example.models.actors.Comensal;
 public class ComensalController {
     private final Comensal comensal ;
 
-
 }
