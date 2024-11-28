@@ -11,8 +11,8 @@ public class Main extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(800);   // Ancho de la ventana
-        settings.setHeight(600);  // Alto de la ventana
+        settings.setWidth(2000);   // Ancho de la ventana
+        settings.setHeight(1000);  // Alto de la ventana
         settings.setTitle("Simulador de Restaurante"); // Título de la ventana
         settings.setVersion("1.0");
     }
@@ -23,8 +23,8 @@ public class Main extends GameApplication {
         restaurantView = new RestaurantView();
 
         // Agregamos meseros
-        restaurantView.agregarMesero(new MeseroView(200, 100));
-        restaurantView.agregarMesero(new MeseroView(400, 100));
+        restaurantView.agregarMesero(new MeseroView(2, 1));
+        restaurantView.agregarMesero(new MeseroView(4, 1));
 
         // Creamos algunos comensales y los agregamos al restaurante
         restaurantView.agregarComensal(50, 100, 300, 200);  // Comensal en la posición (50, 100)
